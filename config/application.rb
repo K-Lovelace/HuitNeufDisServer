@@ -12,7 +12,7 @@ module Picking
     config.load_defaults 5.1
     config.generators { |g| g.orm :neo4j }
     config.neo4j.session.type = :http
-    config.neo4j.session.url = 'https://huitneufdis:b.0ixZbib7S5qZ.0sblEeOJht6zuWbT@hobby-fkiilamakgkigbkeildbdpal.dbs.graphenedb.com:24780/db/data/'
+    config.neo4j.session.url = 'https://kimberly_blanda_cornsilk:oOjiqDfns6CRW4GoLFTqpZmvAeaJYalHWhJ7L1aE@kimberly-blanda-cornsilk.aws.graphstory.com:7473'
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

@@ -14,7 +14,23 @@
 :constraints:
 - CONSTRAINT ON ( `neo4j::migrations::schemamigration`:`Neo4j::Migrations::SchemaMigration`
   ) ASSERT `neo4j::migrations::schemamigration`.migration_id IS UNIQUE
+- CONSTRAINT ON ( armoire:Armoire ) ASSERT armoire.uuid IS UNIQUE
+- CONSTRAINT ON ( article:Article ) ASSERT article.uuid IS UNIQUE
+- CONSTRAINT ON ( case:Case ) ASSERT case.uuid IS UNIQUE
+- CONSTRAINT ON ( command:Command ) ASSERT command.uuid IS UNIQUE
+- CONSTRAINT ON ( leadsto:LeadsTo ) ASSERT leadsto.uuid IS UNIQUE
+- CONSTRAINT ON ( marquage:Marquage ) ASSERT marquage.uuid IS UNIQUE
+- CONSTRAINT ON ( porte:Porte ) ASSERT porte.uuid IS UNIQUE
 - CONSTRAINT ON ( product:Product ) ASSERT product.uuid IS UNIQUE
+- CONSTRAINT ON ( user:User ) ASSERT user.uuid IS UNIQUE
 :indexes: []
 :versions:
 - '20180305223301'
+- '20180307103251'
+- '20180307105105'
+- '20180307105232'
+- '20180307105449'
+- '20180307105541'
+- '20180307105614'
+- '20180307105755'
+- '20180307105947'

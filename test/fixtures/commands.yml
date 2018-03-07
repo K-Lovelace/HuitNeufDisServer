@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nb_articles: 1
+  total_weight: 1.5
+  max_weight: 1.5
+
+two:
+  nb_articles: 1
+  total_weight: 1.5
+  max_weight: 1.5
