@@ -10,9 +10,7 @@ end
 gem 'rails', '~> 5.1.5'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
-group :production do
-  gem 'pg'
-end
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -28,6 +26,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'sprockets'
 gem 'react-rails'
+gem 'sqlite3'
 # for rubygems
 gem 'neo4j', '~> 9.1.0' # For example, see https://rubygems.org/gems/neo4j/versions for the latest versions
 # Use Redis adapter to run Action Cable in production
@@ -41,7 +40,6 @@ gem 'neo4j', '~> 9.1.0' # For example, see https://rubygems.org/gems/neo4j/versi
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'sqlite3'
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
