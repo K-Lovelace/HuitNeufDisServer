@@ -20,12 +20,11 @@
 - CONSTRAINT ON ( command:Command ) ASSERT command.uuid IS UNIQUE
 - CONSTRAINT ON ( leadsto:LeadsTo ) ASSERT leadsto.uuid IS UNIQUE
 - CONSTRAINT ON ( marquage:Marquage ) ASSERT marquage.uuid IS UNIQUE
+- CONSTRAINT ON ( node:Node ) ASSERT node.uuid IS UNIQUE
 - CONSTRAINT ON ( porte:Porte ) ASSERT porte.uuid IS UNIQUE
-- CONSTRAINT ON ( product:Product ) ASSERT product.uuid IS UNIQUE
 - CONSTRAINT ON ( user:User ) ASSERT user.uuid IS UNIQUE
 :indexes: []
 :versions:
-- '20180305223301'
 - '20180307103251'
 - '20180307105105'
 - '20180307105232'
@@ -34,3 +33,5 @@
 - '20180307105614'
 - '20180307105755'
 - '20180307105947'
+- '20180312184153'
+- '20180312184532'

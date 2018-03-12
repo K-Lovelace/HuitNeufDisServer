@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   post "/subscribe" => "subscription#create"
   post "/push" => "picking#push"
 
-  get 'users/group_command'
+  get 'users/:id/group_command(:format)' => "users#group_command"
 
   get 'picking/notifications'
 

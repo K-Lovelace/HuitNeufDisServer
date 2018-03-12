@@ -1,4 +1,6 @@
 namespace :populate_db do
+  task all: [:users, :build_zone, :map, :generate_articles, :generate_commands]
+
   task :users, [] => :environment do |t, args|
     1.upto(10).each do |i|
       #create a user with minimum 90kg push and 45kg carry
@@ -16,6 +18,7 @@ namespace :populate_db do
       puts "Constructing allee #{allee}"
       porte = Porte.find_or_create_by(allee: allee) do |p|
         p.allee = allee
+        p.numero = 0
         p.entry = (index % 2 == 0)
       end
 
@@ -34,7 +37,7 @@ namespace :populate_db do
       1.upto(31).each do |repere|
         puts "Marquage #{allee}I#{repere}"
 
-        marquage = Marquage.find_or_create_by(numero: "#{allee}I#{repere}")
+        marquage = Marquage.find_or_create_by(allee: allee, numero: repere)
 
         if porte.entry # From AI1 to AI31
             # Porte
@@ -62,7 +65,7 @@ namespace :populate_db do
 
         # Marquages
         if allee > 'A'
-          marquage2 = Marquage.find_or_create_by(numero: "#{(allee.ord-1).chr}I#{repere}")
+          marquage2 = Marquage.find_or_create_by(allee: (allee.ord-1).chr, numero: repere)
           LeadsTo.create(from_node: marquage2, to_node: marquage) unless repere == 1 && allee == 'B'
         end
       end
@@ -110,5 +113,4 @@ namespace :populate_db do
       command.save
     end
   end
-
 end
