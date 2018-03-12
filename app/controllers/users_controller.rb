@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
-
+  skip_before_action :verify_authenticity_token
   # GET /users
   # GET /users.json
   def index
@@ -10,6 +10,12 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+  end
+  
+  # GET /group_command/1
+  # GET /group_command/1.json
+  def group_command
+    
   end
 
   # POST /users
@@ -48,6 +54,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.fetch(:user, {})
+      params.fetch(:user, {}).permit(:name, :max_carry, :max_push)
     end
 end

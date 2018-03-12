@@ -5,6 +5,6 @@ class Case
   property :etagere, type: Integer
 
   has_one :in, :article, origin: :cases
-  has_one :in, :armoire, type: :IN, model_class: :Armoire
+  has_one :out, :armoire, type: :IN, model_class: :Armoire
 
 end

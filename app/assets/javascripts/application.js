@@ -14,5 +14,7 @@
 //= require turbolinks
 //= require react
 //= require react_ujs
+//= require_tree ./vendors
+// require react_bootstrap
 //= require components
-//= require_tree .
+//= require serviceworker-companion

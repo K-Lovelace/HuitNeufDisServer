@@ -1,0 +1,13 @@
+<h1>Bienvenue sur l'interface approvisionneur de HuitNeufDis!</h1>
+
+<p><a href="#">Activez les notifications</a> pour recevoir les alertes de stock</p>
+
+<button class="js-push-button">Send a message</button>
+
+<script type="text/javascript">
+  (function() {
+    $('.js-push-button').on("click", function onClick() {
+      $.post("/push");
+    });
+  })();
+</script>

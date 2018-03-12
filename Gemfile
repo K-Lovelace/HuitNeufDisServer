@@ -25,8 +25,12 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 gem 'sprockets'
+gem 'serviceworker-rails'
+gem 'webpush'
 gem 'react-rails'
 gem 'sqlite3'
+gem 'react-bootstrap-rails'
+gem 'bootstrap'
 # for rubygems
 gem 'neo4j', '~> 9.1.0' # For example, see https://rubygems.org/gems/neo4j/versions for the latest versions
 # Use Redis adapter to run Action Cable in production

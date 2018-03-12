@@ -1,0 +1,11 @@
+{
+  "name": "HuitNeufDis",
+  "short_name": "test",
+  "start_url": "./push-simple/",
+  "display": "standalone",
+  "icons": [{
+      "src": "/assets/images/apple-touch-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }]
+}

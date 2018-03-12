@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
-  get 'welcome/index'
-  root 'welcome#index'
+  post "/subscribe" => "subscription#create"
+  post "/push" => "picking#push"
+
+  get 'users/group_command'
+
+  get 'picking/notifications'
+
+  get 'picking/supervisor'
+
+  root 'picking#notifications'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :armoires
   resources :articles
