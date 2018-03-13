@@ -24,28 +24,30 @@ class UsersController < ApplicationController
   #       id
 
   def group_command
-    @user.commands = [Command.find('fc98003d-3d09-4c3e-9979-7d953bb336cd')]
+    @user.commands = [Command.find('a6ba835f-6e15-4364-a6bd-28286de876eb')]
     result = []
     # Get all articles
-    articles = []
+    armoires = []
     article_ids = []
     @user.commands.each do |command|
       command.articles.each_with_rel do |article, requires|
         if !article_ids.include?(article.id)
-          articles << {
-            article: article,
-            nb: requires.quantity_left,
-            case: article.cases.first,
-            armoire: article.cases.first.armoire
+          armoires << {
+            node: article.cases.first.armoire,
+            to_pick: {
+              article: article,
+              nb: requires.quantity_left,
+              case: article.cases.first,
+            }
           }
           article_ids << article.id
         else
-          articles[article_ids.index(article.id)][:nb] += requires.quantity_left
+          armoires[article_ids.index(article.id)][:to_pick][:nb] += requires.quantity_left
         end
       end
     end
 
-    result = build_path(articles)
+    result = build_path(armoires)
 
     render json: result
   end
@@ -90,18 +92,35 @@ class UsersController < ApplicationController
     end
 
 
-    def build_path(articles)
-      result = []
-      # sort articles by their closet
-      articles.sort_by! {|article| [article[:armoire].allee, article[:armoire].numero]}
+    def build_path(armoires)
+      # sort armoire by allee
+      armoires.sort! {|a, b| a[:node] <=> b[:node]}
       # find entry
-      door = Porte.find_by(allee: articles.first[:armoire].allee)
-      door = Porte.find_by(allee: (articles.first[:armoire].allee.ord-1).chr) unless door.entry
-      result.unshift(door)
-      while articles.length > 0
-        a = result.last
-        b = articles.first
+      door = Porte.find_by(allee: armoires.first[:node].allee)
+      door = Porte.find_by(allee: (armoires.first[:node].allee.ord-1).chr) unless door.entry
+      result = [{
+        node: door
+      }]
+      while armoires.length > 0
+        node = result.last
+        armoire = armoires.shift
+        # return armoires
+        path = node[:node].path_to(armoire[:node])
+
+        path << armoire
+        result += path
       end
+
+      # find exit
+      door = Porte.find_by(allee: result.last[:node].allee)
+      door = Porte.find_by(allee: (result.last[:node].allee.ord+1).chr) if door.entry
+
+      path = result.last[:node].path_to(door)
+
+      path << {
+        node: door
+      }
+      result += path
 
       result
     end

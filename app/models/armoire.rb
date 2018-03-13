@@ -2,7 +2,6 @@ class Armoire < Node
   include Neo4j::ActiveNode
 
   has_many :in, :cases, origin: :armoire
-  has_many :out, :leads_to, rel_class: :LeadsTo, model_class: :Marquage
 
   after_create :build_cases
 
