@@ -22,6 +22,7 @@
 - CONSTRAINT ON ( marquage:Marquage ) ASSERT marquage.uuid IS UNIQUE
 - CONSTRAINT ON ( node:Node ) ASSERT node.uuid IS UNIQUE
 - CONSTRAINT ON ( porte:Porte ) ASSERT porte.uuid IS UNIQUE
+- CONSTRAINT ON ( subscription:Subscription ) ASSERT subscription.uuid IS UNIQUE
 - CONSTRAINT ON ( user:User ) ASSERT user.uuid IS UNIQUE
 :indexes: []
 :versions:
@@ -35,3 +36,4 @@
 - '20180307105947'
 - '20180312184153'
 - '20180312184532'
+- '20180314195730'

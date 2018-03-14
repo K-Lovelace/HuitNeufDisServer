@@ -9,8 +9,15 @@ class Requires
 
   before_create :initialize_quantity_left
 
+  after_update :update_command
+
   def initialize_quantity_left
     self.quantity_left = self.quantity
+  end
+
+  def update_command
+    from_node.compute_articles
+    from_node.save
   end
 
 end

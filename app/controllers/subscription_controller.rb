@@ -1,7 +1,8 @@
 class SubscriptionController < ApplicationController
   def create
-    session[:subscription] = JSON.dump(params.fetch(:subscription, {}))
-
+    Subscription.create({
+      json: params[:subscription]
+    })
     head :ok
   end
 end

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy, :group_command]
+  before_action :set_user, only: [:show, :update, :destroy, :group_command, :end_command]
   skip_before_action :verify_authenticity_token
   # GET /users
   # GET /users.json
@@ -12,8 +12,22 @@ class UsersController < ApplicationController
   def show
   end
 
-  # GET /group_command/1
-  # GET /group_command/1.json
+  def end_command
+    @user.commands.each do |command|
+      if command.nb_articles <= 0
+        command.destroy
+      else
+        command.articles.each_rel do |requires|
+          requires.destroy if requires.quantity_left <= 0
+        end
+      end
+    end
+
+    @user.commands = []
+
+    render json: {response: 'ok'}, status: :success
+  end
+
   # result
   #   Tableau d'éléments
   #     type

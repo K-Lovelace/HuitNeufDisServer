@@ -1,1 +1,1 @@
-json.partial! "cases/case", case: @case
+json.partial! "cases/case", mycase: @case

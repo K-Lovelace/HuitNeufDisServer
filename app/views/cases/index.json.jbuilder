@@ -1,1 +1,1 @@
-json.array! @cases, partial: 'cases/case', as: :case
+json.array! @cases, partial: 'cases/case', as: :mycase

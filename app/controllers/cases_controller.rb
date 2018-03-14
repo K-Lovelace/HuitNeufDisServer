@@ -1,15 +1,49 @@
 class CasesController < ApplicationController
-  before_action :set_case, only: [:show, :edit, :update, :destroy]
+  before_action :set_case, only: [:show, :edit, :update, :destroy, :take, :empty]
 
   # GET /cases
   # GET /cases.json
   def index
-    @cases = Case.all
+    if params[:problems].blank?
+      @cases = Case.all
+    else
+      @cases = Case.as(:c).where('c.stock <= 1').pluck(:c)
+      @cases.map!{|c| {
+        id: c.id,
+        name: c.name,
+        stock: c.stock
+      }}
+
+      @cases.sort_by! {:name}
+
+      render json: @cases
+    end
   end
 
   # GET /cases/1
   # GET /cases/1.json
   def show
+  end
+
+  def take
+    params[:nb] ||= 1
+    # user = User.find(params[:user])
+
+    rel = user.commands.articles(:a, :rel).match_to(@case.article.id).pluck(:rel).first
+    rel.quantity_left -= params[:nb]
+    rel.save
+
+    @case.stock -= params[:nb].to_i
+    @case.save
+
+    render json: @case, status: :SUCCESS
+  end
+
+  def empty
+    @case.stock = 0
+    @case.save
+
+    render json: @case, status: :SUCCESS
   end
 
   # GET /cases/new

@@ -1,34 +1,31 @@
 class PickingController < ApplicationController
-  def notifications
+  def stock
+    @cases = Case.as(:c).where('c.stock <= 1').pluck(:c)
+    @cases.map!{|c| {
+      id: c.id,
+      name: c.name,
+      stock: c.stock
+    }}
+
+    @cases.sort_by! {:name}
+
+    @decodedVapidPublicKey = Base64.urlsafe_decode64(Rails.application.config.notifications[:public_key]).bytes
   end
 
   def supervisor
   end
 
   def push
-    Webpush.payload_send webpush_params
-
-    head :ok
-  end
-
-  private
-
-  def webpush_params
-    subscription_params = fetch_subscription
-    message = "Hello world, the time is #{Time.zone.now}"
-    endpoint = subscription_params[:endpoint],
-    p256dh = subscription_params.dig(:keys, :p256dh)
-    auth = subscription_params.dig(:keys, :auth)
-    # api_key = enpoint =~ /\.google.com\// = ENV.fetch('GOOGLE_CLOUD_MESSAGE_API_KEY') || ""
-
-    { message: message, endpoint: endpoint, p256dh: p256dh, auth: auth, api_key: api_key }
-  end
-
-  def fetch_subscription
-    encoded_subscription = session.fetch(:subscription) do
-      raise "Cannot create notification: no :subscription in params or session"
-    end
-
-    JSON.parse(Base64.urlsafe_decode64(encoded_subscription)).with_indifferent_access
+    Webpush.payload_send(
+      message: params[:message],
+      endpoint: params[:subscription][:endpoint],
+      p256dh: params[:subscription][:keys][:p256dh],
+      auth: params[:subscription][:keys][:auth],
+      ttl: 24 * 60 * 60,
+      vapid: {
+        public_key: Rails.application.config.notifications[:public_key],
+        private_key: Rails.application.config.notifications[:private_key]
+      }
+    )
   end
 end

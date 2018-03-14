@@ -1,0 +1,21 @@
+<button class="webpush-button btn btn-primary btn-lg">Click here!</button>
+
+<script type="text/javascript">
+  window.vapidPublicKey = new Uint8Array(<%= @decodedVapidPublicKey %>)
+
+  $('.webpush-button').on('click', (e) => {
+    navigator.serviceWorker.ready
+    .then((serviceWorkerRegistration) => {
+      serviceWorkerRegistration.pushManager.getSubscription()
+      .then((subscription) => {
+        $.post('/push', {
+          subscription: subscription.toJSON(),
+          message: 'You clicked a button!'
+        });
+      });
+    });
+  });
+</script>
+
+
+<%= react_component 'Stock', stock: @cases %>

@@ -59,6 +59,19 @@ function onFetch(event) {
   );
 }
 
+self.addEventListener("push", (event) => {
+  console.log("event", event, event.data.json())
+  let data = event.data.json()
+  let title = data.title;
+  let body = data.body;
+  let tag = "huitneufdis-tag";
+  let icon = '/assets/apple-touch-icon';
+
+  event.waitUntil(
+    self.registration.showNotification(title, { body, icon, tag })
+  )
+});
+
 self.addEventListener('install', onInstall);
 self.addEventListener('activate', onActivate);
 self.addEventListener('fetch', onFetch);

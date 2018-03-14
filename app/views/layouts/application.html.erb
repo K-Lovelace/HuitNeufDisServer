@@ -17,9 +17,6 @@
 
     <link rel="manifest" href="/manifest.json" />
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <script type="text/javascript">
-      window.vapidPublicKey = new Uint8Array(<%= Base64.decode64(Rails.application.config.notifications[:public_key]).bytes %>)
-    </script>
   </head>
 
   <body>

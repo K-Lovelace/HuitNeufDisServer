@@ -10,11 +10,11 @@
   </thead>
 
   <tbody>
-    <% @cases.each do |case| %>
+    <% @cases.each do |mycase| %>
       <tr>
-        <td><%= link_to 'Show', case %></td>
-        <td><%= link_to 'Edit', edit_case_path(case) %></td>
-        <td><%= link_to 'Destroy', case, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', mycase %></td>
+        <td><%= link_to 'Edit', edit_case_path(mycase) %></td>
+        <td><%= link_to 'Destroy', mycase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

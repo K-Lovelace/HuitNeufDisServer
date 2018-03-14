@@ -1,2 +1,2 @@
-json.extract! case, :id, :created_at, :updated_at
-json.url case_url(case, format: :json)
+json.extract! mycase, :id, :section, :etagere
+json.url case_url(mycase, format: :json)
