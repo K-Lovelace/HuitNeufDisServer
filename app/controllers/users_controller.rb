@@ -74,9 +74,9 @@ class UsersController < ApplicationController
       cases = article[:article].cases(:c).where("c.stock >= #{article[:nb]}").order('c.stock DESC').pluck(:c)
       if cases.length == 0
         nb_available = 0
-        article[:article].cases.order('c.stock DESC').each do |c|
+        article[:article].cases(:c).order('c.stock DESC').pluck(:c).each do |c|
           break if nb_available + c.stock >= article[:nb]
-          nb_taken += c.stock
+          nb_available += c.stock
           cases << c
         end
       end
@@ -114,14 +114,17 @@ class UsersController < ApplicationController
         to_pick: armoire[:cases].map { |c|
           article = articles.select { |a| a[:article].id == c.article.id }.first
           quantity = article[:quantity] > c.stock ? c.stock : article[:quantity]
-          return nil if quantity <= 0
-          article[:quantity] -= c.stock
-          {
-            case: c,
-            nb: article[:nb],
-            article: article[:article]
-          }
-        }
+          if quantity > 0
+              article[:quantity] -= c.stock
+              {
+                case: c,
+                nb: article[:nb],
+                article: article[:article]
+              }
+          else
+            nil
+          end
+        }.compact
       }
 
       # remove cases that contains articles that are already taken
@@ -187,7 +190,8 @@ class UsersController < ApplicationController
         to_pick: to_pick
       }
     }
-    render json: result
+    
+    render json: result, layout: false
   end
 
   # POST /users
