@@ -18,17 +18,21 @@ class Case
       }
       Subscription.all.each do |subsc|
         subscription = JSON.parse(subsc[:json])
-        Webpush.payload_send(
-          message: JSON.generate(message),
-          endpoint: subscription["endpoint"],
-          p256dh: subscription["keys"]["p256dh"],
-          auth: subscription["keys"]["auth"],
-          ttl: 15,
-          vapid: {
-              subject: 'mailto:admin@example.com',
-          public_key: Rails.application.config.notifications[:public_key],
-          private_key: Rails.application.config.notifications[:private_key]
-        })
+        begin
+          Webpush.payload_send(
+            message: JSON.generate(message),
+            endpoint: subscription["endpoint"],
+            p256dh: subscription["keys"]["p256dh"],
+            auth: subscription["keys"]["auth"],
+            ttl: 15,
+            vapid: {
+                subject: 'mailto:admin@example.com',
+            public_key: Rails.application.config.notifications[:public_key],
+            private_key: Rails.application.config.notifications[:private_key]
+          })
+        rescue e
+          subsc.destroy # if there is any problem, just destroy it
+        end
       end
     end
   end

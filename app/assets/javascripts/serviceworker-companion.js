@@ -21,9 +21,6 @@ if (navigator.serviceWorker) {
         return pushSubscription;
       });
     });
-    navigator.serviceWorker.addEventListener('push', function(event) {
-      window.getStock()
-    });
 }
 
 

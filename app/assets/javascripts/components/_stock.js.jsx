@@ -1,15 +1,16 @@
-const { Container, Row, Col } = Reactstrap;
+const { Container, Row, Col, Button } = Reactstrap;
 class Stock extends React.Component {
   constructor(props) {
     super(props)
 
-    window.getStock = () => {this.getStock}
+    this.getStock = this.getStock.bind(this)
     this.state = {
       stock: props.stock
     }
   }
 
-  getStock() {
+  getStock(e) {
+    let self = this
     $.getJSON('/cases.json?problems=1', (response) => { this.setState({stock: response}) } )
   }
 
@@ -27,7 +28,7 @@ class Stock extends React.Component {
           <Col>
             <h1>Bienvenue sur l'interface approvisionneur de HuitNeufDis!</h1>
 
-            <p><a href="#">Activez les notifications</a> pour recevoir les alertes de stock</p>
+            <Button id="refresh" color="primary" onClick={this.getStock}>Rafraichir</Button>
           </Col>
         </Row>
         <Row>
